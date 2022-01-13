@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const mysqlConfig = {
   port: process.env.MYSQL_PORT,
   host: process.env.MYSQL_HOST,
@@ -5,4 +7,4 @@ const mysqlConfig = {
   password: process.env.MYSQL_PASSWORD,
 };
 
-module.exports = mysqlConfig;
+module.exports = { mysqlConfig };

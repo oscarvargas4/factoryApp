@@ -1,6 +1,7 @@
 const { Sequelize } = require('sequelize');
 const mysql = require('mysql2/promise');
-const { port, host, username, password } = require('../../config');
+const config = require('../../config');
+const { port, host, username, password } = config.mysqlConfig;
 
 const database = 'oscar_interview';
 
