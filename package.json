@@ -1,0 +1,14 @@
+{
+  "name": "factoryapp",
+  "version": "0.1.0",
+  "description": "Car factory App for multiple brands",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Oscar Vargas",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.6.0"
+  }
+}
