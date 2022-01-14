@@ -1,0 +1,158 @@
+{
+  "info": {
+    "_postman_id": "dee33a71-d476-4416-83c3-474b06962405",
+    "name": "factoryApp",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Car",
+      "id": "34b2cbc0-d93c-42f3-a550-d23b6aaab6b3",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"brand\": \"toyota\",\r\n    \"prodTime\": \"4\"\r\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": "http://localhost:3000/cars"
+      },
+      "response": []
+    },
+    {
+      "name": "Read Car",
+      "id": "f67acdf3-8ed9-47f1-a726-5e507e06175f",
+      "protocolProfileBehavior": { "disableBodyPruning": true },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"brand\": \"toYota\"\r\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": "http://localhost:3000/cars"
+      },
+      "response": []
+    },
+    {
+      "name": "Update Name Car",
+      "id": "2aa52139-1320-46a1-8ba9-cafe093d44dc",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"brand\": \"toyota\",\r\n    \"newBrand\": \"toyota2\"\r\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": "http://localhost:3000/cars/newBrand"
+      },
+      "response": []
+    },
+    {
+      "name": "Update ProdTime Car",
+      "id": "d48a6c13-802d-4ee7-b481-7a172d20452a",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"brand\": \"toyota\",\r\n    \"newProdTime\": 10\r\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": "http://localhost:3000/cars/newProdTime"
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Car",
+      "id": "5548de15-87f0-4e5e-b763-078ac9bc4941",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"brand\": \"toyota\"\r\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": "http://localhost:3000/cars"
+      },
+      "response": []
+    },
+    {
+      "name": "Create Order",
+      "id": "9bf76365-9c92-447e-a3ae-ee23c1774177",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"clientName\": \"Oscar\",\r\n    \"desiredDay\": 6,\r\n    \"quantity\": 4,\r\n    \"CarId\": 4\r\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": "http://localhost:3000/order"
+      },
+      "response": []
+    },
+    {
+      "name": "predefineValues",
+      "id": "65ac185c-2710-4ac9-843c-8226819f3eb1",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": "http://localhost:3000/predefineValues"
+      },
+      "response": []
+    },
+    {
+      "name": "Read Order",
+      "id": "82191cd7-e729-4f5c-8bd1-e339a2d803ea",
+      "protocolProfileBehavior": { "disableBodyPruning": true },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n\r\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "http://localhost:3000/order/:id",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["order", ":id"],
+          "variable": [{ "key": "id", "value": "1" }]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Read Production Days",
+      "id": "8ed32fd0-3097-4b08-95ad-bd0e19a82ba2",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "http://localhost:3000/productionDays"
+      },
+      "response": []
+    },
+    {
+      "name": "Read ordersProductionDays",
+      "id": "5b90b65c-1cf1-4766-b78c-c3a1dd95d0d5",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "http://localhost:3000/ordersProductionDays"
+      },
+      "response": []
+    }
+  ]
+}

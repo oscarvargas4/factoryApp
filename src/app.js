@@ -19,11 +19,11 @@ app.get('/', (req, res) => {
 });
 
 // Routes
-app.use('/players', require('./routes/players'));
 app.use('/predefineValues', require('./routes/predefineValues'));
 app.use('/cars', require('./routes/cars'));
 app.use('/order', require('./routes/orders'));
 app.use('/productionDays', require('./routes/productionDays'));
+app.use('/ordersProductionDays', require('./routes/ordersProductionDays'));
 
 app.listen(PORT, async function () {
   console.log(`App runining on http://localhost:${PORT}`);
