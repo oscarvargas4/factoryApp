@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
     try {
       // Order with client requirements
       //const clientOrder =
-      await Order.create({
+      const newOrder = await Order.create({
         clientName: req.body.clientName.toLowerCase(),
         desiredDay: req.body.desiredDay, // by id
         quantity: req.body.quantity,
@@ -57,9 +57,20 @@ router.post('/', async (req, res) => {
             req.body.quantity * carRequired.prodTime,
         });
 
+        await newOrder.update({
+          deliverDay: desiredDay.id,
+        });
+
         pendingCars = pendingCars - req.body.quantity;
 
-        res.status(201).json({ Available: 'assigned successfully' });
+        res
+          .status(201)
+          .json({ Available: 'assigned successfully', order: newOrder });
+      } else if (desiredDay.id == 6) {
+        res.status(400).json({
+          Error:
+            'No time available at production factory, please try next week',
+        });
       } else {
         let availableCars = Math.floor(availableTime / carRequired.prodTime);
 
@@ -80,26 +91,46 @@ router.post('/', async (req, res) => {
             },
           });
 
-          availableTime = deliverDay.hoursLimit - deliverDay.cumulativeHours;
-
-          let availableCars = Math.floor(availableTime / carRequired.prodTime);
-
-          if (availableCars >= pendingCars) {
-            await deliverDay.update({
-              cumulativeHours:
-                deliverDay.cumulativeHours + pendingCars * carRequired.prodTime,
+          if (deliverDay.id == 6) {
+            newOrder.update({
+              quantity: newOrder.quantity - pendingCars,
             });
-
+            res.status(400).json({
+              Error: `No time available at production factory, please wait until next week for your pending units ${pendingCars}`,
+              order: newOrder,
+            });
             pendingCars = 0;
-            res.status(201).json({ Available: 'assigned successfully' });
           } else {
-            await deliverDay.update({
-              cumulativeHours:
-                deliverDay.cumulativeHours +
-                availableCars * carRequired.prodTime,
-            });
+            availableTime = deliverDay.hoursLimit - deliverDay.cumulativeHours;
 
-            pendingCars = pendingCars - availableCars;
+            let availableCars = Math.floor(
+              availableTime / carRequired.prodTime
+            );
+
+            if (availableCars >= pendingCars) {
+              await deliverDay.update({
+                cumulativeHours:
+                  deliverDay.cumulativeHours +
+                  pendingCars * carRequired.prodTime,
+              });
+
+              await newOrder.update({
+                deliverDay: deliverDay.id,
+              });
+
+              pendingCars = 0;
+              res
+                .status(201)
+                .json({ Available: 'assigned successfully', order: newOrder });
+            } else {
+              await deliverDay.update({
+                cumulativeHours:
+                  deliverDay.cumulativeHours +
+                  availableCars * carRequired.prodTime,
+              });
+
+              pendingCars = pendingCars - availableCars;
+            }
           }
         }
       }
