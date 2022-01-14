@@ -42,11 +42,13 @@ router.post('/', async (req, res) => {
         },
       });
 
-      const availableTime = desiredDay.hoursLimit - desiredDay.cumulativeHours;
+      let availableTime = desiredDay.hoursLimit - desiredDay.cumulativeHours;
 
       let availableCarsDesiredDay = Math.floor(
         availableTime / carRequired.prodTime
       );
+
+      let pendingCars = req.body.quantity;
 
       if (availableCarsDesiredDay >= req.body.quantity) {
         await desiredDay.update({
@@ -54,28 +56,53 @@ router.post('/', async (req, res) => {
             desiredDay.cumulativeHours +
             req.body.quantity * carRequired.prodTime,
         });
+
+        pendingCars = pendingCars - req.body.quantity;
+
+        res.status(201).json({ Available: 'assigned successfully' });
       } else {
+        let availableCars = Math.floor(availableTime / carRequired.prodTime);
+
         await desiredDay.update({
           cumulativeHours:
-            desiredDay.cumulativeHours +
-            availableCarsDesiredDay * carRequired.prodTime,
+            desiredDay.cumulativeHours + availableCars * carRequired.prodTime,
         });
 
-        const pendingCars = req.body.quantity - availableCarsDesiredDay;
+        pendingCars = pendingCars - availableCars;
 
-        const deliverDay = await ProductionDay.findOne({
-          where: {
-            id: req.body.desiredDay + 1,
-          },
-        });
+        let i = 0;
 
-        await deliverDay.update({
-          cumulativeHours:
-            deliverDay.cumulativeHours + pendingCars * carRequired.prodTime,
-        });
+        while (pendingCars > 0) {
+          i++;
+          let deliverDay = await ProductionDay.findOne({
+            where: {
+              id: req.body.desiredDay + i,
+            },
+          });
+
+          availableTime = deliverDay.hoursLimit - deliverDay.cumulativeHours;
+
+          let availableCars = Math.floor(availableTime / carRequired.prodTime);
+
+          if (availableCars >= pendingCars) {
+            await deliverDay.update({
+              cumulativeHours:
+                deliverDay.cumulativeHours + pendingCars * carRequired.prodTime,
+            });
+
+            pendingCars = 0;
+            res.status(201).json({ Available: 'assigned successfully' });
+          } else {
+            await deliverDay.update({
+              cumulativeHours:
+                deliverDay.cumulativeHours +
+                availableCars * carRequired.prodTime,
+            });
+
+            pendingCars = pendingCars - availableCars;
+          }
+        }
       }
-
-      res.status(201).json({ Available: availableCarsDesiredDay });
     } catch (error) {
       res.status(400).json({ error });
     }
