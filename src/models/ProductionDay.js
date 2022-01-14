@@ -2,16 +2,13 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../database/db');
 
 const ProductionDay = sequelize.define('ProductionDay', {
-  clientName: {
+  dayName: {
     type: DataTypes.STRING,
   },
-  desiredDay: {
+  hoursLimit: {
     type: DataTypes.INTEGER,
   },
-  deliverDay: {
-    type: DataTypes.INTEGER,
-  },
-  quantity: {
+  cumulativeHours: {
     type: DataTypes.INTEGER,
   },
 });

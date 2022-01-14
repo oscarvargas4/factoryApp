@@ -20,6 +20,7 @@ app.get('/', (req, res) => {
 
 // Routes
 app.use('/players', require('./routes/players'));
+app.use('/predefineValues', require('./routes/predefineValues'));
 app.use('/cars', require('./routes/cars'));
 app.use('/order', require('./routes/orders'));
 
