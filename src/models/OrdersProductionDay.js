@@ -8,6 +8,9 @@ const OrdersProductionDay = sequelize.define('OrdersProductionDay', {
     autoIncrement: true,
     allowNull: false,
   },
+  quantity: {
+    type: DataTypes.INTEGER,
+  },
 });
 
 module.exports = OrdersProductionDay;

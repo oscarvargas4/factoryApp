@@ -8,14 +8,18 @@ const OrdersProductionDay = require('../models/OrdersProductionDay');
 
 // POST "/order": create an order
 router.post('/', async (req, res) => {
-  if (!req.body.clientName || !req.body.desiredDay || !req.body.CarId) {
+  if (!req.body.clientName || !req.body.CarId) {
     res.status(400).json({
       Error:
-        'You must provide all required values: clientName, desiredDay, quantity, CarId',
+        'You must provide all required values: clientName, quantity, CarId',
     });
   } else if (req.body.quantity < 1 || req.body.quantity > 10) {
     res.status(400).json({
       Error: 'Product quantity must be between 1 unit and 10 units',
+    });
+  } else if (req.body.desiredDay < 0 || req.body.desiredDay > 6) {
+    res.status(400).json({
+      Error: 'Factory does not work on that day',
     });
   } else {
     try {
@@ -50,7 +54,11 @@ router.post('/', async (req, res) => {
 
       let pendingCars = req.body.quantity;
 
-      if (availableCarsDesiredDay >= req.body.quantity) {
+      if (
+        availableCarsDesiredDay >= req.body.quantity ||
+        (desiredDay.id == 6 &&
+          carRequired.prodTime * newOrder.quantity <= availableTime)
+      ) {
         await desiredDay.update({
           cumulativeHours:
             desiredDay.cumulativeHours +
@@ -64,6 +72,7 @@ router.post('/', async (req, res) => {
         await OrdersProductionDay.create({
           OrderId: newOrder.id,
           ProductionDayId: desiredDay.id,
+          quantity: req.body.quantity,
         });
 
         pendingCars = pendingCars - req.body.quantity;
@@ -71,7 +80,11 @@ router.post('/', async (req, res) => {
         res
           .status(201)
           .json({ Available: 'assigned successfully', order: newOrder });
-      } else if (desiredDay.id == 6) {
+        // TODO Necesario modificar acceso en este caso
+      } else if (
+        desiredDay.id == 6 &&
+        carRequired.prodTime * newOrder.quantity > availableTime
+      ) {
         res.status(400).json({
           Error:
             'No time available at production factory, please try next week',
@@ -82,6 +95,13 @@ router.post('/', async (req, res) => {
         await desiredDay.update({
           cumulativeHours:
             desiredDay.cumulativeHours + availableCars * carRequired.prodTime,
+        });
+
+        // ! Estos ceros en quntity puede ser una medida importante para realizar KPIs de rendimiento
+        await OrdersProductionDay.create({
+          OrderId: newOrder.id,
+          ProductionDayId: desiredDay.id,
+          quantity: availableCars,
         });
 
         pendingCars = pendingCars - availableCars;
@@ -96,19 +116,25 @@ router.post('/', async (req, res) => {
             },
           });
 
+          // TODO necesario modificar acceso a este caso
           if (deliverDay.id == 6) {
             newOrder.update({
               quantity: newOrder.quantity - pendingCars,
             });
             res.status(400).json({
-              Error: `No time available at production factory, please wait until next week for your pending units ${pendingCars}`,
+              Error: `No time available at production factory, please wait until next week for your pending ${pendingCars} units `,
               order: newOrder,
             });
 
-            await OrdersProductionDay.create({
-              OrderId: newOrder.id,
-              ProductionDayId: deliverDay.id,
-            });
+            //!
+
+            if (newOrder.quantity - pendingCars >= 0) {
+              await OrdersProductionDay.create({
+                OrderId: newOrder.id,
+                ProductionDayId: deliverDay.id,
+                quantity: newOrder.quantity - pendingCars,
+              });
+            }
 
             pendingCars = 0;
           } else {
@@ -132,6 +158,7 @@ router.post('/', async (req, res) => {
               await OrdersProductionDay.create({
                 OrderId: newOrder.id,
                 ProductionDayId: deliverDay.id,
+                quantity: pendingCars,
               });
 
               pendingCars = 0;
@@ -146,6 +173,13 @@ router.post('/', async (req, res) => {
               });
 
               pendingCars = pendingCars - availableCars;
+
+              // !
+              await OrdersProductionDay.create({
+                OrderId: newOrder.id,
+                ProductionDayId: deliverDay.id,
+                quantity: availableCars,
+              });
             }
           }
         }

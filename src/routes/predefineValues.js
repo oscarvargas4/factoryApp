@@ -19,6 +19,10 @@ router.post('/', async (req, res) => {
         brand: 'chevrolet',
         prodTime: 2,
       },
+      {
+        brand: 'renault',
+        prodTime: 1,
+      },
     ]);
 
     // ProductionDays
