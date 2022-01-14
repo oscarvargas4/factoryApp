@@ -1,7 +1,9 @@
 const express = require('express');
+const Car = require('../models/Car');
 const router = express.Router();
 //! const sequelize = require('../database/db');
 const Order = require('../models/Order');
+const ProductionDay = require('../models/ProductionDay');
 
 // POST "/order": create an order
 router.post('/', async (req, res) => {
@@ -16,14 +18,67 @@ router.post('/', async (req, res) => {
         'You must provide all required values: clientName, desiredDay, quantity, CarId',
     });
   } else {
-    const newOrder = await Order.create({
-      clientName: req.body.clientName.toLowerCase(),
-      desiredDay: req.body.desiredDay,
-      quantity: req.body.quantity,
-      CarId: req.body.CarId,
-    });
+    try {
+      // Order with client requirements
+      //const clientOrder =
+      await Order.create({
+        clientName: req.body.clientName.toLowerCase(),
+        desiredDay: req.body.desiredDay, // by id
+        quantity: req.body.quantity,
+        CarId: req.body.CarId,
+      });
 
-    res.status(201).json({ Order: newOrder });
+      // Find required Car
+      const carRequired = await Car.findOne({
+        where: {
+          id: req.body.CarId,
+        },
+      });
+
+      // Hoy many cars can produce on that day
+      const desiredDay = await ProductionDay.findOne({
+        where: {
+          id: req.body.desiredDay,
+        },
+      });
+
+      const availableTime = desiredDay.hoursLimit - desiredDay.cumulativeHours;
+
+      let availableCarsDesiredDay = Math.floor(
+        availableTime / carRequired.prodTime
+      );
+
+      if (availableCarsDesiredDay >= req.body.quantity) {
+        await desiredDay.update({
+          cumulativeHours:
+            desiredDay.cumulativeHours +
+            req.body.quantity * carRequired.prodTime,
+        });
+      } else {
+        await desiredDay.update({
+          cumulativeHours:
+            desiredDay.cumulativeHours +
+            availableCarsDesiredDay * carRequired.prodTime,
+        });
+
+        const pendingCars = req.body.quantity - availableCarsDesiredDay;
+
+        const deliverDay = await ProductionDay.findOne({
+          where: {
+            id: req.body.desiredDay + 1,
+          },
+        });
+
+        await deliverDay.update({
+          cumulativeHours:
+            deliverDay.cumulativeHours + pendingCars * carRequired.prodTime,
+        });
+      }
+
+      res.status(201).json({ Available: availableCarsDesiredDay });
+    } catch (error) {
+      res.status(400).json({ error });
+    }
   }
 });
 
