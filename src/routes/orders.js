@@ -7,15 +7,14 @@ const ProductionDay = require('../models/ProductionDay');
 
 // POST "/order": create an order
 router.post('/', async (req, res) => {
-  if (
-    !req.body.clientName ||
-    !req.body.desiredDay ||
-    !req.body.quantity ||
-    !req.body.CarId
-  ) {
+  if (!req.body.clientName || !req.body.desiredDay || !req.body.CarId) {
     res.status(400).json({
       Error:
         'You must provide all required values: clientName, desiredDay, quantity, CarId',
+    });
+  } else if (req.body.quantity < 1 || req.body.quantity > 10) {
+    res.status(400).json({
+      Error: 'Product quantity must be between 1 unit and 10 units',
     });
   } else {
     try {
