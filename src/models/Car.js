@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../database/db');
 
-const Player = sequelize.define('Player', {
+const Car = sequelize.define('Car', {
   brand: {
     type: DataTypes.STRING,
   },
@@ -10,4 +10,4 @@ const Player = sequelize.define('Player', {
   },
 });
 
-module.exports = Player;
+module.exports = Car;
