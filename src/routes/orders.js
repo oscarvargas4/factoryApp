@@ -4,6 +4,7 @@ const router = express.Router();
 //! const sequelize = require('../database/db');
 const Order = require('../models/Order');
 const ProductionDay = require('../models/ProductionDay');
+const OrdersProductionDay = require('../models/OrdersProductionDay');
 
 // POST "/order": create an order
 router.post('/', async (req, res) => {
@@ -60,6 +61,11 @@ router.post('/', async (req, res) => {
           deliverDay: desiredDay.id,
         });
 
+        await OrdersProductionDay.create({
+          OrderId: newOrder.id,
+          ProductionDayId: desiredDay.id,
+        });
+
         pendingCars = pendingCars - req.body.quantity;
 
         res
@@ -98,6 +104,12 @@ router.post('/', async (req, res) => {
               Error: `No time available at production factory, please wait until next week for your pending units ${pendingCars}`,
               order: newOrder,
             });
+
+            await OrdersProductionDay.create({
+              OrderId: newOrder.id,
+              ProductionDayId: deliverDay.id,
+            });
+
             pendingCars = 0;
           } else {
             availableTime = deliverDay.hoursLimit - deliverDay.cumulativeHours;
@@ -115,6 +127,11 @@ router.post('/', async (req, res) => {
 
               await newOrder.update({
                 deliverDay: deliverDay.id,
+              });
+
+              await OrdersProductionDay.create({
+                OrderId: newOrder.id,
+                ProductionDayId: deliverDay.id,
               });
 
               pendingCars = 0;
