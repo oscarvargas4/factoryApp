@@ -32,6 +32,7 @@ router.get('/dayToDay', async (req, res) => {
 
     try {
       let toyotaDays = await ProductionDay.findAll({
+        raw: true,
         attributes: ['id', 'dayName'],
         include: [
           {
@@ -47,6 +48,16 @@ router.get('/dayToDay', async (req, res) => {
           },
         ],
       });
+
+      let toyotaProgram = {};
+
+      toyotaProgram[toyotaDays[0].dayName] =
+        toyotaDays[0]['Orders.OrdersProductionDay.quantity'];
+      console.log(toyotaProgram);
+
+      // for (let i = 0; toyotaDays.length; i++) {
+      //   toyotaProgram[toyotaDays[i].dayName] = 'Prueba';
+      // }
 
       res.json({ toyotaDays });
     } catch (error) {
