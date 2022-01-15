@@ -57,6 +57,20 @@ router.get('/', async (req, res) => {
   }
 });
 
+// GET "/cars": read a car by brand name:
+router.get('/all', async (req, res) => {
+  try {
+    const findCars = await Car.findAll({});
+    if (findCars === null) {
+      res.status(404).json({ Error: "There isn't any car" });
+    } else {
+      res.status(200).json({ findCars });
+    }
+  } catch (error) {
+    res.status(400).json({ error });
+  }
+});
+
 // PUT "/cars/newBrand": update name car
 router.put('/newBrand', async (req, res) => {
   if (!req.body.brand) {

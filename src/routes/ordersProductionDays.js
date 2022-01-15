@@ -35,7 +35,7 @@ router.get('/dayToDay', async (req, res) => {
       let cars = await Car.findAll({ raw: true });
 
       for (let j = 0; j < cars.length; j++) {
-        let toyotaDays = await ProductionDay.findAll({
+        let carDays = await ProductionDay.findAll({
           raw: true,
           attributes: ['id', 'dayName'],
           include: [
@@ -53,18 +53,18 @@ router.get('/dayToDay', async (req, res) => {
           ],
         });
 
-        let newToyotaDays = toyotaDays.filter((element) => {
+        let newcarDays = carDays.filter((element) => {
           return element['Orders.OrdersProductionDay.quantity'] > 0;
         });
 
-        let toyotaProgram = {};
+        let carProgram = {};
 
-        for (let i = 0; i < newToyotaDays.length; i++) {
-          toyotaProgram[newToyotaDays[i].dayName] =
-            newToyotaDays[i]['Orders.OrdersProductionDay.quantity'];
+        for (let i = 0; i < newcarDays.length; i++) {
+          carProgram[newcarDays[i].dayName] =
+            newcarDays[i]['Orders.OrdersProductionDay.quantity'];
         }
 
-        weekSchedule[cars[j].brand] = toyotaProgram;
+        weekSchedule[cars[j].brand] = carProgram;
       }
 
       res.json({ weekSchedule });
