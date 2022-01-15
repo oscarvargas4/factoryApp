@@ -31,7 +31,7 @@ app.listen(PORT, async function () {
   // Database connection
   //! Force: true -> DROP TABLES
   try {
-    await sequelize.sync({ force: true });
+    await sequelize.sync({ force: false });
     console.log('Database connection successful');
   } catch (error) {
     console.log('Database connection failed', error);
