@@ -29,15 +29,15 @@ router.get('/dayToDay', async (req, res) => {
     ordersProductionDays = ordersProductionDays.filter(
       (orderProductionDay) => orderProductionDay.quantity > 0
     );
-    // let days = [];
 
     try {
-      let days = await ProductionDay.findAll({
+      let toyotaDays = await ProductionDay.findAll({
         attributes: ['id', 'dayName'],
         include: [
           {
             model: Order,
-            attributes: ['id'],
+            where: { CarId: 1 },
+            attributes: ['id', 'CarId'],
             include: [
               {
                 model: Car,
@@ -48,7 +48,7 @@ router.get('/dayToDay', async (req, res) => {
         ],
       });
 
-      res.json({ days });
+      res.json({ toyotaDays });
     } catch (error) {
       res.status(400).json({ error });
     }
