@@ -80,7 +80,6 @@ router.post('/', async (req, res) => {
         res
           .status(201)
           .json({ Available: 'assigned successfully', order: newOrder });
-        // TODO Necesario modificar acceso en este caso
       } else if (
         desiredDay.id == 6 &&
         carRequired.prodTime * newOrder.quantity > availableTime
@@ -97,7 +96,7 @@ router.post('/', async (req, res) => {
             desiredDay.cumulativeHours + availableCars * carRequired.prodTime,
         });
 
-        // ! Estos ceros en quntity puede ser una medida importante para realizar KPIs de rendimiento
+        // ! Estos ceros en quantity puede ser una medida importante para realizar KPIs de rendimiento
         await OrdersProductionDay.create({
           OrderId: newOrder.id,
           ProductionDayId: desiredDay.id,
@@ -173,8 +172,6 @@ router.post('/', async (req, res) => {
               });
 
               pendingCars = pendingCars - availableCars;
-
-              // !
               await OrdersProductionDay.create({
                 OrderId: newOrder.id,
                 ProductionDayId: deliverDay.id,
