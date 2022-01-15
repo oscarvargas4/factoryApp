@@ -61,7 +61,7 @@ router.get('/dayToDay', async (req, res) => {
 
         for (let i = 0; i < newToyotaDays.length; i++) {
           toyotaProgram[newToyotaDays[i].dayName] =
-            newToyotaDays[0]['Orders.OrdersProductionDay.quantity'];
+            newToyotaDays[i]['Orders.OrdersProductionDay.quantity'];
         }
 
         weekSchedule[cars[j].brand] = toyotaProgram;
@@ -77,7 +77,7 @@ router.get('/dayToDay', async (req, res) => {
       //   include: [
       //     {
       //       model: Order,
-      //       where: { CarId: 3 },
+      //       where: { CarId: 1 },
       //       attributes: ['id', 'CarId'],
       //       include: [
       //         {
@@ -97,11 +97,11 @@ router.get('/dayToDay', async (req, res) => {
 
       // for (let i = 0; i < newToyotaDays.length; i++) {
       //   toyotaProgram[newToyotaDays[i].dayName] =
-      //     newToyotaDays[0]['Orders.OrdersProductionDay.quantity'];
+      //     newToyotaDays[i]['Orders.OrdersProductionDay.quantity'];
       // }
 
       // !
-      // console.log(toyotaProgram);
+      // console.log(newToyotaDays);
 
       // res.json({ toyotaProgram });
     } catch (error) {
