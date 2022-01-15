@@ -4,7 +4,7 @@
   "description": "Car factory App for multiple brands",
   "main": "src/app.js",
   "scripts": {
-    "dev": "nodemon src/app.js",
+    "dev": "nodemon server/src/app.js",
     "checkDB": "node src/database/checkDB.js"
   },
   "author": "Oscar Vargas",
