@@ -31,43 +31,79 @@ router.get('/dayToDay', async (req, res) => {
     );
 
     try {
-      let toyotaDays = await ProductionDay.findAll({
-        raw: true,
-        attributes: ['id', 'dayName'],
-        include: [
-          {
-            model: Order,
-            where: { CarId: 1 },
-            attributes: ['id', 'CarId'],
-            include: [
-              {
-                model: Car,
-                attributes: ['brand'],
-              },
-            ],
-          },
-        ],
-      });
+      let weekSchedule = {};
+      let cars = await Car.findAll({ raw: true });
 
-      let toyotaProgram = {};
+      for (let j = 0; j < cars.length; j++) {
+        let toyotaDays = await ProductionDay.findAll({
+          raw: true,
+          attributes: ['id', 'dayName'],
+          include: [
+            {
+              model: Order,
+              where: { CarId: cars[j].id },
+              attributes: ['id', 'CarId'],
+              include: [
+                {
+                  model: Car,
+                  attributes: ['brand'],
+                },
+              ],
+            },
+          ],
+        });
 
-      // toyotaProgram[toyotaDays[0].dayName] =
-      //   toyotaDays[0]['Orders.OrdersProductionDay.quantity'];
+        let newToyotaDays = toyotaDays.filter((element) => {
+          return element['Orders.OrdersProductionDay.quantity'] > 0;
+        });
 
-      // toyotaProgram[toyotaDays[1].dayName] =
-      //   toyotaDays[0]['Orders.OrdersProductionDay.quantity'];
+        let toyotaProgram = {};
 
-      // toyotaProgram[toyotaDays[2].dayName] =
-      //   toyotaDays[0]['Orders.OrdersProductionDay.quantity'];
+        for (let i = 0; i < newToyotaDays.length; i++) {
+          toyotaProgram[newToyotaDays[i].dayName] =
+            newToyotaDays[0]['Orders.OrdersProductionDay.quantity'];
+        }
 
-      for (let i = 0; i < toyotaDays.length; i++) {
-        toyotaProgram[toyotaDays[i].dayName] =
-          toyotaDays[0]['Orders.OrdersProductionDay.quantity'];
+        weekSchedule[cars[j].brand] = toyotaProgram;
       }
 
-      console.log(toyotaProgram);
+      res.json({ weekSchedule });
 
-      res.json({ toyotaDays });
+      // !
+
+      // let toyotaDays = await ProductionDay.findAll({
+      //   raw: true,
+      //   attributes: ['id', 'dayName'],
+      //   include: [
+      //     {
+      //       model: Order,
+      //       where: { CarId: 3 },
+      //       attributes: ['id', 'CarId'],
+      //       include: [
+      //         {
+      //           model: Car,
+      //           attributes: ['brand'],
+      //         },
+      //       ],
+      //     },
+      //   ],
+      // });
+
+      // let newToyotaDays = toyotaDays.filter((element) => {
+      //   return element['Orders.OrdersProductionDay.quantity'] > 0;
+      // });
+
+      // let toyotaProgram = {};
+
+      // for (let i = 0; i < newToyotaDays.length; i++) {
+      //   toyotaProgram[newToyotaDays[i].dayName] =
+      //     newToyotaDays[0]['Orders.OrdersProductionDay.quantity'];
+      // }
+
+      // !
+      // console.log(toyotaProgram);
+
+      // res.json({ toyotaProgram });
     } catch (error) {
       res.status(400).json({ error });
     }
