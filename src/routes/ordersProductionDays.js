@@ -51,13 +51,21 @@ router.get('/dayToDay', async (req, res) => {
 
       let toyotaProgram = {};
 
-      toyotaProgram[toyotaDays[0].dayName] =
-        toyotaDays[0]['Orders.OrdersProductionDay.quantity'];
-      console.log(toyotaProgram);
+      // toyotaProgram[toyotaDays[0].dayName] =
+      //   toyotaDays[0]['Orders.OrdersProductionDay.quantity'];
 
-      // for (let i = 0; toyotaDays.length; i++) {
-      //   toyotaProgram[toyotaDays[i].dayName] = 'Prueba';
-      // }
+      // toyotaProgram[toyotaDays[1].dayName] =
+      //   toyotaDays[0]['Orders.OrdersProductionDay.quantity'];
+
+      // toyotaProgram[toyotaDays[2].dayName] =
+      //   toyotaDays[0]['Orders.OrdersProductionDay.quantity'];
+
+      for (let i = 0; i < toyotaDays.length; i++) {
+        toyotaProgram[toyotaDays[i].dayName] =
+          toyotaDays[0]['Orders.OrdersProductionDay.quantity'];
+      }
+
+      console.log(toyotaProgram);
 
       res.json({ toyotaDays });
     } catch (error) {
