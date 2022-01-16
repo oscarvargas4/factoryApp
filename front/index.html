@@ -73,20 +73,20 @@
             <input type="text" class="form-control" id="txtBrand">
             <label for="txtProdTime">Ingrese la cantidad de horas para fabricar una unidad</label>
             <input type="number" class="form-control" id="txtProdTime" min="1" max="8">
-            <input type="submit" class="btn btn-primary button" value="Crear Vehiculo"> 
+            <input type="submit" class="btn btn-primary button" value="Crear Marca"> 
             <p id="createBrandMsg"></p>
           </form>
         </div>
-        <div id="divEditarVehiculo" class="optionContent" style="display: none;">
+        <div id="divEditarVehiculo" class="optionContent" style="display: none;" >
           <h3>Editar Marca</h3>
-          <form form action="CreateOrder()" id="formEditBrand">          
+          <form form action="CreateOrder()" id="formEditBrand" id="formEditBrand">          
             <label for="txtBrand">Ingrese el nombre de la marca que desea editar</label>
             <input type="text" class="form-control" id="txtBrand">
             <label for="txtNewBrand">Ingrese el nuevo nombre de la marca</label>
             <input type="text" class="form-control" id="txtNewBrand">
             <label for="txtProdTime">Actualice la cantidad de horas para fabricar una unidad</label>
             <input type="number" class="form-control" id="txtProdTime" min="1" max="8">
-            <input type="submit" class="btn btn-primary" value="Editar Vehiculo"> 
+            <input type="submit" class="btn btn-primary button" value="Editar Marca"> 
             <p id="editBrandMsg"></p>
           </form>
         </div>
@@ -97,7 +97,7 @@
             <select type="text" class="form-control" id="txtDeleteBrand">
               <option disabled selected>Seleccione</option>
             </select>
-            <input type="submit" class="btn btn-primary button" value="Eliminar Vehiculo"> <!-- Cambié button por input-->
+            <input type="submit" class="btn btn-primary button" value="Eliminar Marca"> <!-- Cambié button por input-->
             <p id="deleteBrandMsg"></p>
           </form>
         </div>

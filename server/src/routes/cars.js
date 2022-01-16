@@ -76,14 +76,10 @@ router.get('/all', async (req, res) => {
   }
 });
 
-// PUT "/cars/newBrand": update name car
+// PUT "/cars/newBrand": update car
 router.put('/newBrand', async (req, res) => {
-  if (!req.body.brand) {
-    res.status(400).json({ Error: 'Please provide a brand name to update' });
-  } else if (!req.body.newBrand) {
-    res.status(400).json({
-      Error: 'Please provide a new brand name to update',
-    });
+  if ((!req.body.brand) || (!req.body.newBrand) || (!req.body.newProdTime)) {
+    res.status(400).json({ Error: 'Please provide: brand, newBrand, newProdTime' });
   } else {
     try {
       const updateCar = await Car.findOne({
@@ -107,6 +103,11 @@ router.put('/newBrand', async (req, res) => {
       } else {
         await updateCar.update({
           brand: req.body.newBrand.toLowerCase(),
+          prodTime:  req.body.prodTime.toLowerCase()
+        }, {
+          where: {
+            brand: req.body.newBrand.toLowerCase()
+          }
         });
 
         res.json(updateCar);

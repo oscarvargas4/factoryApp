@@ -157,16 +157,15 @@ const CreateOrder = () => {
             }
             if (deliveryDay != 'Orden no procesada') {
               tagP.appendChild(document.createTextNode(`Pedido creado satisfactoriamente.  La fecha de entrega del vehículo es para ${deliveryDay}`));
-              // ResetForms();
+              ResetForms();
             }
           })
-          .catch((error) => tagP.appendChild(document.createTextNode(`Ocurrió un error en el sistema.  Intente más tarde`)));
       } else {
         //Manage error when is != to 201
-        tagP.appendChild(document.createTextNode(`Ocurrió un error en el sistema.  Intente más tarde`));
+        tagP.appendChild(document.createTextNode(`Ocurrió un error 2 en el sistema.  Intente más tarde`));
       }
     })
-    .catch((error) => tagP.appendChild(document.createTextNode(`Ocurrió un error en el sistema.  Intente más tarde`))
+    .catch((error) => tagP.appendChild(document.createTextNode(`Ocurrió un error 3 en el sistema.  Intente más tarde`))
 
     );
 };
@@ -226,6 +225,11 @@ const ResetForms = () => {
   document.getElementById('formEditBrand').reset();
   document.getElementById('formCreateBrand').reset();
   document.getElementById('formDelteBrand').reset();
+
+//   document.getElementById('deleteBrandMsg').innerHTML() = "";
+//   document.getElementById('createBrandMsg').innerHTML() = "";
+//   document.getElementById('createOrderMsg').innerHTML() = "";
+//   document.getElementById('editOrderMsg').innerHTML() = "";
 
   // const requestGetCarBrands = FetchRequest('GET', {},'http://localhost:3000/cars/all');
   //       requestGetCarBrands.then((responseCarBrands) => {
