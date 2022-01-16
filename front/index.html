@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Planeador XYZ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script type="text/javascript" lang="javascript" src="js/jquery.min.js"> </script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> -->
+    <link rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="styles/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="col-md-12" style="margin: 3em;">
+      <div class="col-md-8 centrado" >
+        <h1>Planeador XYZ</h1>
+        <div class="col-md-12">
+
+                <button id="btnCrearPedido" class="btn btn-primary"  >Crear Pedido</button>
+                <button id="btnVerProgramacion" class="btn btn-primary" >Ver Programación</button>
+                <button id="btnCrearVehiculo" class="btn btn-primary" >Crear Vehículo</button>
+                <button id="btnEditarVehiculo" class="btn btn-primary" >Editar Vehículo</button>
+                <button id="btnEliminarVehiculo" class="btn btn-primary" >Eliminar Vehículo</button>
+
+        </div>
+        <div class="col-md-12 contenedor">
+            <div id="divCrearPedido" class="optionContent" style="display: none;">
+                <h3>Crear Pedido</h3>
+                <label for="txtName">label </label>
+                <input id="txtName" type="text">
+            </div>
+            <div id="divVerProgramacion" class="optionContent" style="display: none;">
+                <h3>Ver Programacion</h3>
+                <input id="txtName" type="text">
+            </div>
+            <div id="divCrearVehiculo" class="optionContent" style="display: none;">
+                <h3>Crear Vehiculo</h3>
+                <input id="txtName" type="text">
+            </div>
+            <div id="divEditarVehiculo" class="optionContent" style="display: none;">
+                <h3>Editar Vehiculo</h3>
+                <input id="txtName" type="text">
+            </div>
+            <div id="divEliminarVehiculo" class="optionContent" style="display: none;">
+                <h3>Eliminar Vehiculo</h3>
+                <input id="txtName" type="text">
+            </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+<script type="text/javascript" src="js/script.js"></script>
