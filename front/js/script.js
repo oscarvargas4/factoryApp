@@ -2,57 +2,68 @@
 // import routes from './routesFile.js';
 
 // variable declaration
-const btnCrearPedido = document.getElementById("btnCrearPedido");
-const btnVerProgramacion = document.getElementById("btnVerProgramacion");
-const btnCrearVehiculo = document.getElementById("btnCrearVehiculo");
-const btnEditarVehiculo = document.getElementById("btnEditarVehiculo");
-const btnEliminarVehiculo = document.getElementById("btnEliminarVehiculo");
+const btnCrearPedido = document.getElementById('btnCrearPedido');
+const btnVerProgramacion = document.getElementById('btnVerProgramacion');
+const btnCrearVehiculo = document.getElementById('btnCrearVehiculo');
+const btnEditarVehiculo = document.getElementById('btnEditarVehiculo');
+const btnEliminarVehiculo = document.getElementById('btnEliminarVehiculo');
+const btnCreateOrder = document.getElementById('btnCreateOrder');
 
-const divCrearPedido = document.getElementById("divCrearPedido");
-const divVerProgramacion = document.getElementById("divVerProgramacion");
-const divCrearVehiculo = document.getElementById("divCrearVehiculo");
-const divEditarVehiculo = document.getElementById("divEditarVehiculo");
-const divEliminarVehiculo = document.getElementById("divEliminarVehiculo");
+const divCrearPedido = document.getElementById('divCrearPedido');
+const divVerProgramacion = document.getElementById('divVerProgramacion');
+const divCrearVehiculo = document.getElementById('divCrearVehiculo');
+const divEditarVehiculo = document.getElementById('divEditarVehiculo');
+const divEliminarVehiculo = document.getElementById('divEliminarVehiculo');
 
 // code to be executed at the very begining of the program execution
 $(document).ready(() => {
-    const requestCreateData = FetchRequest('POST', {}, 'http://localhost:3000/predefineValues');
+    const requestCreateData = FetchRequest(
+        'POST', {},
+        'http://localhost:3000/predefineValues'
+    );
 
-    requestCreateData.then(response => {
-            if (response.ok) {
-                response.json().then(data => {
-                    console.log("Data created");
-                    const requestGetCarBrands = FetchRequest('GET', {}, 'http://localhost:3000/cars/all');
-                    requestGetCarBrands.then(responseCarBrands => {
-                        
+    requestCreateData.then((response) => {
+        if (response.ok) {
+            response.json().then((data) => {
+                console.log('Data created');
+                const requestGetCarBrands = FetchRequest(
+                    'GET', {},
+                    'http://localhost:3000/cars/all'
+                );
+                requestGetCarBrands
+                    .then((responseCarBrands) => {
                         if (responseCarBrands.ok) {
-                            responseCarBrands.text().then(textResponse => ShowAvaiableBrands(JSON.parse(textResponse)))
+                            responseCarBrands
+                                .text()
+                                .then((textResponse) =>
+                                    ShowAvaiableBrands(JSON.parse(textResponse))
+                                );
                         }
-
-                    }).catch();
-
-                });
-            }
-        })
-
-})
+                    })
+                    .catch();
+            });
+        }
+    });
+});
 
 // Events onclick to menu buttons
 btnCrearPedido.onclick = () => {
-    showOptionDisplay('divCrearPedido')
+    showOptionDisplay('divCrearPedido');
 };
 btnVerProgramacion.onclick = () => {
-    showOptionDisplay('divVerProgramacion')
+    showOptionDisplay('divVerProgramacion');
 };
 btnCrearVehiculo.onclick = () => {
-    showOptionDisplay('divCrearVehiculo')
+    showOptionDisplay('divCrearVehiculo');
 };
 btnEditarVehiculo.onclick = () => {
-    showOptionDisplay('divEditarVehiculo')
+    showOptionDisplay('divEditarVehiculo');
 };
 btnEliminarVehiculo.onclick = () => {
-    showOptionDisplay('divEliminarVehiculo')
+    showOptionDisplay('divEliminarVehiculo');
 };
+
+// btnCreateOrder.onclick = () => CreateOrder();
 
 const showOptionDisplay = (divToShow) => {
     divCrearPedido.style.display = 'none';
@@ -63,51 +74,116 @@ const showOptionDisplay = (divToShow) => {
 
     switch (divToShow) {
         case 'divCrearPedido':
-            divCrearPedido.style.display = divCrearPedido.style.display === "none" ? "block" : "none";
+            divCrearPedido.style.display =
+                divCrearPedido.style.display === 'none' ? 'block' : 'none';
             break;
         case 'divVerProgramacion':
-            divVerProgramacion.style.display = divCrearPedido.style.display === "none" ? "block" : "none";
+            divVerProgramacion.style.display =
+                divCrearPedido.style.display === 'none' ? 'block' : 'none';
             break;
         case 'divCrearVehiculo':
-            divCrearVehiculo.style.display = divCrearPedido.style.display === "none" ? "block" : "none";
+            divCrearVehiculo.style.display =
+                divCrearPedido.style.display === 'none' ? 'block' : 'none';
             break;
         case 'divEditarVehiculo':
-            divEditarVehiculo.style.display = divCrearPedido.style.display === "none" ? "block" : "none";
+            divEditarVehiculo.style.display =
+                divCrearPedido.style.display === 'none' ? 'block' : 'none';
             break;
         case 'divEliminarVehiculo':
-            divEliminarVehiculo.style.display = divCrearPedido.style.display === "none" ? "block" : "none";
+            divEliminarVehiculo.style.display =
+                divCrearPedido.style.display === 'none' ? 'block' : 'none';
             break;
     }
 };
 
-
 const FetchRequest = (method, body, url) => {
-
-    const requestData = (method == 'POST') || (method == 'PUT') || (method == 'DELETE') ?
-    {
-        method: method,
-        body: body,
-        headers: new Headers()
-    } :
-    {
-        method: method,
-        headers: new Headers()
-    }
+    const requestData =
+        method == 'POST' || method == 'PUT' || method == 'DELETE' ? {
+            method: method,
+            body: JSON.stringify(body),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        } : {
+            method: method,
+            headers: new Headers(),
+        };
 
     return fetch(url, requestData);
-}
+};
 
-const ShowAvaiableBrands = brandsData => {
+const ShowAvaiableBrands = (brandsData) => {
     console.log(brandsData);
     const selectCarBrand = document.getElementById('txtCarBrand');
-    brandsData.findCars.forEach(carInfo => {
+    brandsData.findCars.forEach((carInfo) => {
         const tag = document.createElement('option');
         tag.value = carInfo.id;
         tag.appendChild(document.createTextNode(carInfo.brand));
         selectCarBrand.appendChild(tag);
     });
-}
+};
 
 const CreateOrder = () => {
+    const dataToSend = {
+        clientName: document.getElementById('txtName').value,
+        desiredDay: parseInt(document.getElementById('txtOrderDay').value),
+        quantity: parseInt(document.getElementById('txtNumberCars').value),
+        CarId: parseInt(document.getElementById('txtCarBrand').value),
+    };
+    console.log(dataToSend);
 
-}
+    const createOrderRequest = FetchRequest(
+        'POST',
+        dataToSend,
+        'http://localhost:3000/order'
+    );
+    const tagP = document.getElementById('createOrderMsg');
+
+    createOrderRequest.then((createOrderResponse) => {
+            if (createOrderResponse.ok) {
+                createOrderResponse.json().then((createOrderObject) => {
+                        let deliveryDay = '';
+                        switch (createOrderObject.order.deliverDay) {
+                            case 1:
+                                deliveryDay = 'Lunes';
+                                break;
+                            case 2:
+                                deliveryDay = 'Martes';
+                                break;
+                            case 3:
+                                deliveryDay = 'Miercoles';
+                                break;
+                            case 4:
+                                deliveryDay = 'Jueves';
+                                break;
+                            case 5:
+                                deliveryDay = 'Viernes';
+                                break;
+                            case 6:
+                                deliveryDay = 'Sabado';
+                                break;
+                            case 7:
+                                deliveryDay = 'Domingo';
+                                break;
+                            default:
+                                deliveryDay = 'Orden no procesada';
+                        }
+                        if (deliveryDay != 'Orden no procesada')
+                            tagP.appendChild(document.createTextNode(`Pedido creado satisfactoriamente.  La fecha de entrega del vehículo es para ${deliveryDay}`));
+                    })
+                    .catch((error) =>
+                        tagP.appendChild(document.createTextNode(`Ocurrió un error en el sistema.  Intente más tarde`))
+                    );
+            } else {
+                //Manage error when is != to 201
+                tagP.appendChild(document.createTextNode(`Ocurrió un error en el sistema.  Intente más tarde`));
+            }
+        })
+        .catch((error) =>
+            tagP.appendChild(
+                document.createTextNode(
+                    `Ocurrió un error en el sistema.  Intente más tarde`
+                )
+            )
+        );
+};
