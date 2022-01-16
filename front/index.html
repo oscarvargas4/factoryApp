@@ -79,9 +79,11 @@
         </div>
         <div id="divEditarVehiculo" class="optionContent" style="display: none;" >
           <h3>Editar Marca</h3>
-          <form form action="CreateOrder()" id="formEditBrand" id="formEditBrand">          
-            <label for="txtBrand">Ingrese el nombre de la marca que desea editar</label>
-            <input type="text" class="form-control" id="txtBrand">
+          <form action="#" onsubmit="/*EditBrand(); return false;*/" id="formEditBrand">          
+            <label for="txtEditBrand">Seleccione la marca que desea editar</label>
+            <select type="text" class="form-control" id="txtEditBrand">
+              <option disabled selected>Seleccione</option>
+            </select>
             <label for="txtNewBrand">Ingrese el nuevo nombre de la marca</label>
             <input type="text" class="form-control" id="txtNewBrand">
             <label for="txtProdTime">Actualice la cantidad de horas para fabricar una unidad</label>

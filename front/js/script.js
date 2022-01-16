@@ -26,11 +26,11 @@ $(document).ready(() => {
     if (response.ok) {
       response.json().then((data) => {
         console.log('Data created');
-        const requestGetCarBrands = FetchRequest('GET', {},'http://localhost:3000/cars/all');
+        const requestGetCarBrands = FetchRequest('GET', {}, 'http://localhost:3000/cars/all');
         requestGetCarBrands.then((responseCarBrands) => {
             if (responseCarBrands.ok) {
               responseCarBrands.text()
-              .then((textResponse) => ShowAvaiableBrands(JSON.parse(textResponse)));
+                .then((textResponse) => ShowAvaiableBrands(JSON.parse(textResponse)));
             }
           })
           .catch();
@@ -99,17 +99,27 @@ const FetchRequest = (method, body, url) => {
 };
 
 const ShowAvaiableBrands = brandsData => {
+
   const selectCarBrand = document.getElementById('txtCarBrand');
   const selectDeleteBrand = document.getElementById('txtDeleteBrand');
-  brandsData.findCars.forEach((carInfo) => {
-    const tag1 = document.createElement('option');
-    const tag2 = document.createElement('option');
-    tag1.value = carInfo.id;
-    tag2.value = carInfo.id;
-    tag1.appendChild(document.createTextNode(carInfo.brand));
-    tag2.appendChild(document.createTextNode(carInfo.brand));
-    selectDeleteBrand.appendChild(tag1);
-    selectCarBrand.appendChild(tag2);
+  const selectEditBrand = document.getElementById('txtEditBrand');
+  const branches = [selectCarBrand, selectDeleteBrand, selectEditBrand]
+
+  brandsData.findCars.forEach(carInfo => {
+    branches.forEach(branch => {
+      const tag = document.createElement('option');
+      tag.value = carInfo.id;
+      tag.appendChild(document.createTextNode(carInfo.brand));
+      branch.appendChild(tag);
+    });
+    // const tag1 = document.createElement('option');
+    // const tag2 = document.createElement('option');
+    // tag1.value = carInfo.id;
+    // tag2.value = carInfo.id;
+    // tag1.appendChild(document.createTextNode(carInfo.brand));
+    // tag2.appendChild(document.createTextNode(carInfo.brand));
+    // selectDeleteBrand.appendChild(tag1);
+    // selectCarBrand.appendChild(tag2);
   });
 
 };
@@ -122,44 +132,44 @@ const CreateOrder = () => {
     CarId: parseInt(document.getElementById('txtCarBrand').value),
   };
 
-  const createOrderRequest = FetchRequest('POST',dataToSend,'http://localhost:3000/order');
+  const createOrderRequest = FetchRequest('POST', dataToSend, 'http://localhost:3000/order');
   const tagP = document.getElementById('createOrderMsg');
   tagP.innerHTML = "";
 
   createOrderRequest.then((createOrderResponse) => {
       if (createOrderResponse.ok) {
         createOrderResponse.json().then((createOrderObject) => {
-            let deliveryDay = '';
-            switch (createOrderObject.order.deliverDay) {
-              case 1:
-                deliveryDay = 'Lunes';
-                break;
-              case 2:
-                deliveryDay = 'Martes';
-                break;
-              case 3:
-                deliveryDay = 'Miercoles';
-                break;
-              case 4:
-                deliveryDay = 'Jueves';
-                break;
-              case 5:
-                deliveryDay = 'Viernes';
-                break;
-              case 6:
-                deliveryDay = 'Sabado';
-                break;
-              case 7:
-                deliveryDay = 'Domingo';
-                break;
-              default:
-                deliveryDay = 'Orden no procesada';
-            }
-            if (deliveryDay != 'Orden no procesada') {
-              tagP.appendChild(document.createTextNode(`Pedido creado satisfactoriamente.  La fecha de entrega del vehículo es para ${deliveryDay}`));
-              ResetForms();
-            }
-          })
+          let deliveryDay = '';
+          switch (createOrderObject.order.deliverDay) {
+            case 1:
+              deliveryDay = 'Lunes';
+              break;
+            case 2:
+              deliveryDay = 'Martes';
+              break;
+            case 3:
+              deliveryDay = 'Miercoles';
+              break;
+            case 4:
+              deliveryDay = 'Jueves';
+              break;
+            case 5:
+              deliveryDay = 'Viernes';
+              break;
+            case 6:
+              deliveryDay = 'Sabado';
+              break;
+            case 7:
+              deliveryDay = 'Domingo';
+              break;
+            default:
+              deliveryDay = 'Orden no procesada';
+          }
+          if (deliveryDay != 'Orden no procesada') {
+            tagP.appendChild(document.createTextNode(`Pedido creado satisfactoriamente.  La fecha de entrega del vehículo es para ${deliveryDay}`));
+            ResetForms();
+          }
+        })
       } else {
         //Manage error when is != to 201
         tagP.appendChild(document.createTextNode(`Ocurrió un error 2 en el sistema.  Intente más tarde`));
@@ -171,23 +181,24 @@ const CreateOrder = () => {
 };
 
 const CreateBrand = () => {
-    const dataToSend = {
-      brand: document.getElementById('txtBrand').value,
-      prodTime: parseInt(document.getElementById('txtProdTime').value),
-    };
-  
-    const createBrandRequest = FetchRequest('POST',dataToSend,'http://localhost:3000/cars');
-    const tagP = document.getElementById('createBrandMsg');
-    tagP.innerHTML = "";
-  
-    createBrandRequest.then((createBrandResponse) => {
-        if (createBrandResponse.ok) {
-            createBrandResponse.json().then((response) => {
-                tagP.appendChild(document.createTextNode(`Marca ${response.newCar.brand} creada satisfactoriamente`));
-            })            
-        } else {
-            tagP.appendChild(document.createTextNode(`Ocurrió un error en el sistema.  Intente más tarde`));
-        }
+  const dataToSend = {
+    brand: document.getElementById('txtBrand').value,
+    prodTime: parseInt(document.getElementById('txtProdTime').value),
+  };
+
+  const createBrandRequest = FetchRequest('POST', dataToSend, 'http://localhost:3000/cars');
+  const tagP = document.getElementById('createBrandMsg');
+  tagP.innerHTML = "";
+
+  createBrandRequest.then((createBrandResponse) => {
+      if (createBrandResponse.ok) {
+        createBrandResponse.json().then((response) => {
+          tagP.appendChild(document.createTextNode(`Marca ${response.newCar.brand} creada satisfactoriamente`));
+          ResetForms()
+        })
+      } else {
+        tagP.appendChild(document.createTextNode(`Ocurrió un error en el sistema.  Intente más tarde`));
+      }
     })
     .catch((error) => tagP.appendChild(document.createTextNode(`Ocurrió un error en el sistema.  Intente más tarde`)));
 };
@@ -198,17 +209,16 @@ const DeleteBrand = () => {
     id: parseInt(document.getElementById('txtDeleteBrand').value)
   };
 
-  const deleteBrandRequest = FetchRequest('DELETE', dataToSend,'http://localhost:3000/cars');
+  const deleteBrandRequest = FetchRequest('DELETE', dataToSend, 'http://localhost:3000/cars');
   const tagP = document.getElementById('deleteBrandMsg');
   tagP.innerHTML = "";
 
   deleteBrandRequest.then((deleteBrandResponse) => {
       if (deleteBrandResponse.ok) {
         deleteBrandResponse.json().then((deleteBrandObject) => {
-          tagP.appendChild(document.createTextNode(`La marca se eliminó correctamente`));
-          // ResetForms();
-        })
-        .catch((error) => tagP.appendChild(document.createTextNode(`Ocurrió un error en el sistema.  Intente más tarde`)));
+            tagP.appendChild(document.createTextNode(`La marca se eliminó correctamente`));
+            ResetForms();
+          })
       } else {
         //Manage error when is != to 201
         tagP.appendChild(document.createTextNode(`La marca no existe`));
@@ -224,20 +234,27 @@ const ResetForms = () => {
   document.getElementById('formCreateOrder').reset();
   document.getElementById('formEditBrand').reset();
   document.getElementById('formCreateBrand').reset();
-  document.getElementById('formDelteBrand').reset();
+  document.getElementById('formDeleteBrand').reset();
 
-//   document.getElementById('deleteBrandMsg').innerHTML() = "";
-//   document.getElementById('createBrandMsg').innerHTML() = "";
-//   document.getElementById('createOrderMsg').innerHTML() = "";
-//   document.getElementById('editOrderMsg').innerHTML() = "";
+  //   document.getElementById('deleteBrandMsg').innerHTML() = "";
+  //   document.getElementById('createBrandMsg').innerHTML() = "";
+  //   document.getElementById('createOrderMsg').innerHTML() = "";
+  //   document.getElementById('editOrderMsg').innerHTML() = "";
 
-  // const requestGetCarBrands = FetchRequest('GET', {},'http://localhost:3000/cars/all');
-  //       requestGetCarBrands.then((responseCarBrands) => {
-  //           if (responseCarBrands.ok) {
-  //             responseCarBrands.text()
-  //             .then((textResponse) => ShowAvaiableBrands(JSON.parse(textResponse)));
-  //           }
-  //         })
-  //         .catch();
+  const selectCarBrand = document.getElementById('txtCarBrand');
+  selectCarBrand.innerHTML = "";
+  const selectDeleteBrand = document.getElementById('txtDeleteBrand');
+  selectDeleteBrand.innerHTML = "";
+  const selectEditBrand = document.getElementById('txtEditBrand');
+  selectEditBrand.innerHTML = "";
+
+  const requestGetCarBrands = FetchRequest('GET', {}, 'http://localhost:3000/cars/all');
+  requestGetCarBrands.then((responseCarBrands) => {
+      if (responseCarBrands.ok) {
+        responseCarBrands.text()
+          .then((textResponse) => ShowAvaiableBrands(JSON.parse(textResponse)));
+      }
+    })
+    .catch();
 
 }

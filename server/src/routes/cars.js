@@ -101,13 +101,10 @@ router.put('/newBrand', async (req, res) => {
           .status(400)
           .json({ Error: 'Brand name already exists, try another brand name' });
       } else {
+        
         await updateCar.update({
           brand: req.body.newBrand.toLowerCase(),
-          prodTime:  req.body.prodTime.toLowerCase()
-        }, {
-          where: {
-            brand: req.body.newBrand.toLowerCase()
-          }
+          prodTime:  req.body.newProdTime
         });
 
         res.json(updateCar);
