@@ -27,15 +27,15 @@
 
         <button id="btnCrearPedido" class="btn btn-primary">Crear Pedido</button>
         <button id="btnVerProgramacion" class="btn btn-primary">Ver Programación</button>
-        <button id="btnCrearVehiculo" class="btn btn-primary">Crear Vehículo</button>
-        <button id="btnEditarVehiculo" class="btn btn-primary">Editar Vehículo</button>
-        <button id="btnEliminarVehiculo" class="btn btn-primary">Eliminar Vehículo</button>
+        <button id="btnCrearVehiculo" class="btn btn-primary">Crear Marca</button>
+        <button id="btnEditarVehiculo" class="btn btn-primary">Editar Marca</button>
+        <button id="btnEliminarVehiculo" class="btn btn-primary">Eliminar Marca</button>
 
       </div>
       <div class="col-md-12 contenedor">
         <div id="divCrearPedido" class="optionContent" style="display: none;">
           <h3>Crear Pedido</h3>
-          <form action="#" onsubmit="CreateOrder();return false;"><!-- action="http://localhost:3000/order" method="POST"-->
+          <form action="#" onsubmit="CreateOrder();return false;" id="formCreateOrder">
             <p class="col-md-12">Recuerde que los pedidos se realiza por semana, es decir que se deben entregar la misma
               semana que se realiza el pedido</p>
             <label for="txtName">Ingrese nombre</label>
@@ -58,7 +58,7 @@
             </select>
             <label for="txtNumberCars">Ingrese la cantidad</label>
             <input type="number" class="form-control" id="txtNumberCars" min="1" max="10" required>
-            <input type="submit" class="btn btn-primary" id="btnCreateOrder" value="Realizar Pedido"> 
+            <input type="submit" class="btn btn-primary button" id="btnCreateOrder" value="Realizar Pedido"> 
             <p id="createOrderMsg"></p>
           </form>
         </div>
@@ -67,35 +67,37 @@
           <input id="txtName" type="text">
         </div>
         <div id="divCrearVehiculo" class="optionContent" style="display: none;">
-          <h3>Crear Vehiculo</h3>
-          <form form action="CreateOrder()">><!-- form action="CreateOrder()"-->            
+          <h3>Crear Marca</h3>
+          <form action="#" onsubmit="CreateBrand();return false;" id="formCreateBrand">
             <label for="txtBrand">Ingrese el nombre de la nueva marca</label>
             <input type="text" class="form-control" id="txtBrand">
             <label for="txtProdTime">Ingrese la cantidad de horas para fabricar una unidad</label>
             <input type="number" class="form-control" id="txtProdTime" min="1" max="8">
-            <input type="submit" class="btn btn-primary" value="Crear Vehiculo"> <!-- Cambié button por input-->
+            <input type="submit" class="btn btn-primary button" value="Crear Vehiculo"> 
             <p id="createBrandMsg"></p>
           </form>
         </div>
         <div id="divEditarVehiculo" class="optionContent" style="display: none;">
-          <h3>Editar Vehiculo</h3>
-          <form form action="CreateOrder()">><!-- form action="CreateOrder()"-->            
+          <h3>Editar Marca</h3>
+          <form form action="CreateOrder()" id="formEditBrand">          
             <label for="txtBrand">Ingrese el nombre de la marca que desea editar</label>
             <input type="text" class="form-control" id="txtBrand">
             <label for="txtNewBrand">Ingrese el nuevo nombre de la marca</label>
             <input type="text" class="form-control" id="txtNewBrand">
             <label for="txtProdTime">Actualice la cantidad de horas para fabricar una unidad</label>
             <input type="number" class="form-control" id="txtProdTime" min="1" max="8">
-            <input type="submit" class="btn btn-primary" value="Editar Vehiculo"> <!-- Cambié button por input-->
+            <input type="submit" class="btn btn-primary" value="Editar Vehiculo"> 
             <p id="editBrandMsg"></p>
           </form>
         </div>
         <div id="divEliminarVehiculo" class="optionContent" style="display: none;">
-          <h3>Eliminar Vehiculo</h3>
-          <form form action="CreateOrder()">><!-- form action="CreateOrder()"-->            
-            <label for="txtDeleteBrand">Ingrese el nombre de la marca que desea eliminar</label>
-            <input type="text" class="form-control" id="txtDeleteBrand">
-            <input type="submit" class="btn btn-primary" value="Eliminar Vehiculo"> <!-- Cambié button por input-->
+          <h3>Eliminar Marca</h3>
+          <form action="#" onsubmit="DeleteBrand(); return false;" id="formDeleteBrand">          
+            <label for="txtDeleteBrand">Seleccione la marca que desea eliminar</label>
+            <select type="text" class="form-control" id="txtDeleteBrand">
+              <option disabled selected>Seleccione</option>
+            </select>
+            <input type="submit" class="btn btn-primary button" value="Eliminar Vehiculo"> <!-- Cambié button por input-->
             <p id="deleteBrandMsg"></p>
           </form>
         </div>

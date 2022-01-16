@@ -151,18 +151,18 @@ router.put('/newProdTime', async (req, res) => {
 // DELETE "/cars": delete a car
 router.delete('/', async (req, res) => {
   try {
-    const updateCar = await Car.findOne({
+    const deleteCar = await Car.findOne({
       where: {
-        brand: req.body.brand.toLowerCase(),
+        id: req.body.id,
       },
     });
 
-    if (updateCar === null) {
+    if (deleteCar === null) {
       res.status(404).json({ Error: 'Car not found' });
     } else {
       await Car.destroy({
         where: {
-          brand: req.body.brand,
+          id: req.body.id,
         },
       });
 
