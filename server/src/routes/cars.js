@@ -57,13 +57,18 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET "/cars": read a car by brand name:
+// GET "/cars": read all cars:
 router.get('/all', async (req, res) => {
   try {
     const findCars = await Car.findAll({});
     if (findCars === null) {
       res.status(404).json({ Error: "There isn't any car" });
     } else {
+      findCars.forEach((car) => {
+        let initialLetter = car.brand[0].toUpperCase();
+        car.brand = car.brand.slice(1);
+        car.brand = initialLetter + car.brand;
+      })
       res.status(200).json({ findCars });
     }
   } catch (error) {
