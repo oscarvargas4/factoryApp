@@ -14,7 +14,7 @@ const divEliminarVehiculo = document.getElementById("divEliminarVehiculo");
 
 // code to be executed at the very beggining of the program execution
 $(document).ready(()=> {
-    //createInitialData();
+    createInitialData();
 })
 
 // Events onclick to menu buttons
@@ -62,5 +62,5 @@ const createInitialData = () => {
     .then(response => {
         if (response.ok) console.log("Data created");
     })
-    .catch(console.log('There was an error creating the data'));
+    .catch((error) => console.log(`There was an error creating the data: ${error}`));
 }
