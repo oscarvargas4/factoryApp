@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
 router.get('/dayToDay', async (req, res) => {
   let ordersProductionDays = await OrdersProductionDay.findAll({});
   if (ordersProductionDays.length === 0) {
-    res.status(200).json({ Error: "There isn't any ordersProductionDays" });
+    res.status(400).json({ Error: "There isn't any ordersProductionDays" });
   } else {
     // Cleaning quantities = 0
     ordersProductionDays = ordersProductionDays.filter(
@@ -68,6 +68,7 @@ router.get('/dayToDay', async (req, res) => {
       }
 
       res.json({ weekSchedule });
+
 
       // !
 

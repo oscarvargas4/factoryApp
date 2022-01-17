@@ -2,8 +2,12 @@ const express = require('express');
 const app = express();
 const sequelize = require('./database/db');
 require('./models/associations');
+const cors = require("cors");
 
 const PORT = process.env.PORT || 3000;
+
+// Applying middleware CORS for all endpoints
+app.use(cors());
 
 // Middleware for fill the req.body
 app.use(express.json());
