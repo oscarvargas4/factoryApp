@@ -1,7 +1,7 @@
 const mysql = require('mysql2/promise');
 const { database } = require('../../ecosystem.config');
 
-// Create Database if does not exists
+// Create Database if does not exists in MYSQL ()
 mysql
   .createConnection({
     user: database.username,
