@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const sequelize = require('./database/db');
 require('./models/associations');
-const cors = require("cors");
+const cors = require('cors');
 
 const PORT = process.env.PORT || 3000;
 
@@ -33,7 +33,7 @@ app.listen(PORT, async function () {
   console.log(`App runining on http://localhost:${PORT}`);
 
   // Database connection
-  //! Force: true -> DROP TABLES
+  //! Force: true -> DROP TABLES: Restart with clean tables
   try {
     await sequelize.sync({ force: false });
     console.log('Database connection successful');

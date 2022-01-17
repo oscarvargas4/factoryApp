@@ -7,7 +7,8 @@ const ProductionDay = require('../models/ProductionDay');
 router.post('/', async (req, res) => {
   try {
     let cars = await Car.findAll({});
-    if (cars.length === 0) {
+    let productionDays = await ProductionDay.findAll({});
+    if (cars.length === 0 && productionDays.length === 0) {
       await Car.bulkCreate([
         {
           brand: 'toyota',
