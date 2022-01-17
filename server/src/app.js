@@ -33,7 +33,7 @@ app.listen(PORT, async function () {
   console.log(`App runining on http://localhost:${PORT}`);
 
   // Database connection
-  //! Force: true -> DROP TABLES
+  //! Force: true -> DROP TABLES: Restart with clean tables
   try {
     await sequelize.sync({ force: false });
     console.log('Database connection successful');
