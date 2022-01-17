@@ -44,7 +44,7 @@ npm install
 ```
 
 2. Asegurarse de tener instalado Microsoft SQL Server y tener los protocolos habilitados:
-   ![Open project](img/mssqlServer.png)
+   ![Open project](img/mssqlServer.PNG)
 
 3. Run the command line to init the project:
 
