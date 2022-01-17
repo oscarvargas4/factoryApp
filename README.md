@@ -56,17 +56,7 @@ npm install
 2. Asegurarse de tener instalado Microsoft SQL Server y tener los protocolos habilitados:
    ![Open project](img/mssqlServer.PNG)
 
-3. Configurar los parámetros de configuración en el archivo `server/ecosystem.config.js` de Sequelize según los parámetros propios de SQL Server:
-
-   - Configuración Sequelize en archivo `server/ecosystem.config.js`:
-
-     ![Open project](img/sequelizeConfig.PNG)
-
-   - Configuración Microsoft SQL Server:
-
-     ![Open project](img/mssqlConfig.PNG)
-
-4. Crear la base de datos en Microsoft SQL Server con la cual se trabajará, en este caso se denominará `oscar_interview`.
+3. Crear la base de datos en Microsoft SQL Server con la cual se trabajará, en este caso se denominará `oscar_interview`.
 
    - La primera opción
      es crearla por consola (recordar cambiar las flags -S (server), -U (username), -P (password), -Q(query) según vuestra configuración de SQL Server y el nombre de la base de datos):
@@ -77,6 +67,16 @@ npm install
      CREATE DATABASE oscar_interview;
      GO
      ```
+
+4. Configurar los parámetros de configuración en el archivo `server/ecosystem.config.js` de Sequelize según los parámetros propios de SQL Server:
+
+   - Configuración Sequelize en archivo `server/ecosystem.config.js`:
+
+     ![Open project](img/sequelizeConfig.PNG)
+
+   - Configuración Microsoft SQL Server:
+
+     ![Open project](img/mssqlConfig.PNG)
 
 5. Una vez creada la base de datos, se arranca el servidor (recordar posicionarse en la carpeta server (comando: `cd server`)):
 
