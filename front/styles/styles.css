@@ -1,0 +1,19 @@
+.centrado {
+    margin: 0 auto;
+}
+
+.contenedor {
+    margin-top: 2em;
+}
+
+.optionContent{
+    border: #ccc;
+    border-radius: 3px;
+    box-shadow: 1px 1px 6px 0px;
+    padding: 2em;
+
+}
+
+.button{
+    margin: 1em;
+}
