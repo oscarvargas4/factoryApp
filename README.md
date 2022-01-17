@@ -47,7 +47,7 @@ Main structure of node.js project. Folders / files:
 
 ### Inicialización del Proyecto
 
-1. Instalar los modulos de Node.js `node_modules`:
+1. Instalar los modulos de Node.js `node_modules` (recordar ubicarse en la carpeta `server` dado que esta contiene el `package.json`):
 
 ```
 npm install
