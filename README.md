@@ -12,6 +12,7 @@ Main structure of node.js project. Folders / files:
   - <b>styles</b>
     - <b>styles.css</b>
   - <b>index.html</b>Entry point
+- <b>img</b>
 - <b>server</b>
   - <b>src</b>
     - <b>database</b>
