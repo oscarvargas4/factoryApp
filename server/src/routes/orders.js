@@ -120,7 +120,7 @@ router.post('/', async (req, res) => {
             newOrder.update({
               quantity: newOrder.quantity - pendingCars,
             });
-            res.status(400).json({
+            res.status(201).json({
               Error: `No time available at production factory, please wait until next week for your pending ${pendingCars} units `,
               order: newOrder,
             });
