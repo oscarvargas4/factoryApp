@@ -91,4 +91,4 @@ npm install
 
    A continuación se procede a abrir el Entry Point del front:
 
-   ![Open project](img/openDefault.PNG)
+   ![Open project](img/openDefault.png)
