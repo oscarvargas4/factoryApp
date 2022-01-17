@@ -5,7 +5,6 @@
 - <b>front</b>:
   - <b>js</b>
     - <b>jquery.min.js</b>
-    - <b>routesFile.js</b>
     - <b>script.js</b>
   - <b>styles</b>
     - <b>styles.css</b>
