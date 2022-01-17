@@ -1,4 +1,4 @@
-# Node Initial Project
+# Factory App
 
 ### Project Structure
 
@@ -56,17 +56,29 @@ npm install
 
      ![Open project](img/mssqlConfig.PNG)
 
-```
-npm run dev
-```
+4. Crear la base de datos en Microsoft SQL Server con la cual se trabajará, en este caso se denominará `oscar_interview`.
 
-5. Be sure you have installed Postman for http requests. Import the http requests from the file: `postmanTest`:
+   - La primera opción
+     es crearla por consola (recordar cambiar las flags -S (server), -U (username), -P (password), -Q(query) según vuestra configuración de SQL Server y el nombre de la base de datos):
+     `sqlcmd -S localhost -U sa -P mssqlpsswrd -Q "CREATE DATABASE oscar_interview;"`
 
-   ![Open project](img/importPostman.png)
+   - La segunda opción es realizar una query en Microsoft SQL Server:
+     ```
+     CREATE DATABASE oscar_interview;
+     GO
+     ```
 
-6. Now you are able to make http requests by Postman
+5. Una vez creada la base de datos, se arranca el servidor (recordar posicionarse en la carpeta server (comando: `cd server`)):
 
-   ![Open project](img/httpRequests.png)
+   ```
+   npm run dev
+   ```
+
+6. Para abrir el front, se recomienda tener instalada la extensión de Visual Studio Code denominada [Open In Default Browser Docs](https://marketplace.visualstudio.com/items?itemName=peakchen90.open-html-in-browser).
+
+   ![Open project](img/defaultBrowser.PNG)
+
+   A continuación se procede a abrir el Entry Point del front:
 
 Follow the steps below:
 
