@@ -1,8 +1,6 @@
 # Factory App
 
-### Project Structure
-
-Main structure of node.js project. Folders / files:
+### Estructura del Proyecto
 
 - <b>front</b>:
   - <b>js</b>
@@ -49,11 +47,15 @@ Main structure of node.js project. Folders / files:
 
 1. Instalar los modulos de Node.js `node_modules` (recordar ubicarse en la carpeta `server` dado que esta contiene el `package.json`):
 
-```
-cd factoryApp // Accediendo a la carpeta clonada de GitHub denominada factoryApp por defecto
-cd server // Accediendo a la carpeta server
-npm install
-```
+   ```
+   cd factoryApp
+   cd server
+   npm install
+   ```
+
+   cd factoryApp // Accediendo a la carpeta clonada de GitHub denominada factoryApp por defecto
+   cd server // Accediendo a la carpeta server
+   npm install // Instalando los paquetes de node package manager según la información en package.json
 
 2. Asegurarse de tener instalado Microsoft SQL Server y tener los protocolos habilitados:
    ![Open project](img/mssqlServer.PNG)
@@ -100,10 +102,10 @@ npm install
 
 7. Si se desea reiniciar la base de datos en algún momento, ir al archivo `app.js` y configurar en la línea #38 de la siguiente forma:
 
-```
-await sequelize.sync({ force: true });
-```
+   ```
+   await sequelize.sync({ force: true });
+   ```
 
-Después guardar el archivo para su pertinente ejecución.
+   Después guardar el archivo para su pertinente ejecución.
 
-Cada vez que se realizará un cambio en el código, la base de datos se reiniciará. En caso de que esto no se desee, configurar a `force: false`.
+   Cada vez que se realizará un cambio en el código, la base de datos se reiniciará. En caso de que esto no se desee, configurar a `force: false`.
