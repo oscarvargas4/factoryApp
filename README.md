@@ -49,9 +49,11 @@ npm install
 3. Configurar los parámetros de configuración en el archivo `server/ecosystem.config.js` de Sequelize según los parámetros propios de SQL Server:
 
    - Configuración Sequelize en archivo `server/ecosystem.config.js`:
+
      ![Open project](img/sequelizeConfig.PNG)
 
    - Configuración Microsoft SQL Server:
+
      ![Open project](img/mssqlConfig.PNG)
 
 ```
