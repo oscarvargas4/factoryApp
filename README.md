@@ -50,6 +50,8 @@ Main structure of node.js project. Folders / files:
 1. Instalar los modulos de Node.js `node_modules` (recordar ubicarse en la carpeta `server` dado que esta contiene el `package.json`):
 
 ```
+cd factoryApp // Accediendo a la carpeta clonada de GitHub denominada factoryApp por defecto
+cd server // Accediendo a la carpeta server
 npm install
 ```
 
@@ -78,7 +80,7 @@ npm install
 
      ![Open project](img/mssqlConfig.PNG)
 
-5. Una vez creada la base de datos, se arranca el servidor (recordar posicionarse en la carpeta server (comando: `cd server`)):
+5. Una vez creada la base de datos, se arranca el servidor (recordar posicionarse en la carpeta server):
 
    ```
    npm run dev
