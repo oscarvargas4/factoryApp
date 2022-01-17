@@ -35,6 +35,13 @@ Main structure of node.js project. Folders / files:
   - <b>package.json</b>.
 - <b>README</b>
 
+### Importar proyecto a Visual Studio Code
+
+- Clonar proyecto desde la plataforma Github: Ejecutar en consola
+  ```
+  git clone https://github.com/oscarvargas4/factoryApp.git
+  ```
+
 ### Inicialización del Proyecto
 
 1. Instalar los modulos de Node.js `node_modules`:
@@ -74,34 +81,14 @@ npm install
    npm run dev
    ```
 
+   Asegurarse de tener en la consola el siguiente log donde se asegura que el servidor arrancó correctamente:
+
+   ![Open project](img/serverStarted.PNG)
+
 6. Para abrir el front, se recomienda tener instalada la extensión de Visual Studio Code denominada [Open In Default Browser Docs](https://marketplace.visualstudio.com/items?itemName=peakchen90.open-html-in-browser).
 
    ![Open project](img/defaultBrowser.PNG)
 
    A continuación se procede a abrir el Entry Point del front:
 
-Follow the steps below:
-
-- Clone the project from the Github Platform. Execute:
-  ```
-  git clone [url project]
-  ```
-- Open the project downloaded.
-  ![Open Project](img/webstorm_open.png)
-
-### Import project for use with Visual Studio Code
-
-Follow the steps below:
-
-- Clone the project from the Github Platform. Execute:
-  ```
-  git clone [url project]
-  ```
-- Open the project downloaded.
-  ![Open Project](img/VSC_open.png)
-
-### Utilities
-
-- [Node Developers Guide](https://nodejs.dev/learn)
-- **.gitignore file** configuration. See [Official Docs](https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files).
-- **Git branches**. See [Official Docs](https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell)
+   ![Open project](img/openDefault.PNG)
