@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const sequelize = require('./database/db');
 require('./models/associations');
-const cors = require("cors");
+const cors = require('cors');
 
 const PORT = process.env.PORT || 3000;
 

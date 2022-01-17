@@ -92,3 +92,13 @@ npm install
    A continuación se procede a abrir el Entry Point del front:
 
    ![Open project](img/openDefault.png)
+
+7. Si se desea reiniciar la base de datos en algún moment, ir al archivo `app.js` y configurar en la línea #38 de la siguiente forma:
+
+```
+await sequelize.sync({ force: true });
+```
+
+Después guardar el archivo para su pertinente ejecución.
+
+Cada vez que se realizará un cambio en el codigo, la base de datos se reiniciará. En caso de que esto no se desee, configurar a `force: false`.
