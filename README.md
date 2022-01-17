@@ -54,7 +54,9 @@
    ```
 
    cd factoryApp // Accediendo a la carpeta clonada de GitHub denominada factoryApp por defecto
+   
    cd server // Accediendo a la carpeta server
+   
    npm install // Instalando los paquetes de node package manager según la información en package.json
 
 2. Asegurarse de tener instalado Microsoft SQL Server y tener los protocolos habilitados:
