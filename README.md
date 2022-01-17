@@ -14,6 +14,8 @@ Main structure of node.js project. Folders / files:
   - <b>index.html</b>Entry point
 - <b>img</b>
 - <b>server</b>
+  - <b>**postman**</b>
+    - <b>postman.json</b>
   - <b>src</b>
     - <b>database</b>
       - <b>db.js</b>
