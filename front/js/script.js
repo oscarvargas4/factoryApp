@@ -37,22 +37,38 @@ $(document).ready(() => {
       });
     }
   });
+
+  const requestGetCalendar = FetchRequest('GET', {}, 'http://localhost:3000/ordersProductionDays/dayToDay');
+
+  requestGetCalendar.then(responseGetCalendar => {
+    if (responseGetCalendar.ok) responseGetCalendar.json().then(objectGetCalendar => showCalendar(objectGetCalendar.weekSchedule));
+    else {
+      console.log('No hay pedidos actualmente');
+      document.getElementById('calendarMsg').innerHTML = "No hay pedidos realizados en este momento";
+    }
+  }).catch(error => console.log(error));
+
 });
 
 // Events onclick to menu buttons
 btnCrearPedido.onclick = () => {
+  hideMessages();
   showOptionDisplay('divCrearPedido');
 };
 btnVerProgramacion.onclick = () => {
+  hideMessages();
   showOptionDisplay('divVerProgramacion');
 };
 btnCrearVehiculo.onclick = () => {
+  hideMessages();
   showOptionDisplay('divCrearVehiculo');
 };
 btnEditarVehiculo.onclick = () => {
+  hideMessages();
   showOptionDisplay('divEditarVehiculo');
 };
 btnEliminarVehiculo.onclick = () => {
+  hideMessages();
   showOptionDisplay('divEliminarVehiculo');
 };
 
@@ -112,14 +128,6 @@ const ShowAvaiableBrands = brandsData => {
       tag.appendChild(document.createTextNode(carInfo.brand));
       branch.appendChild(tag);
     });
-    // const tag1 = document.createElement('option');
-    // const tag2 = document.createElement('option');
-    // tag1.value = carInfo.id;
-    // tag2.value = carInfo.id;
-    // tag1.appendChild(document.createTextNode(carInfo.brand));
-    // tag2.appendChild(document.createTextNode(carInfo.brand));
-    // selectDeleteBrand.appendChild(tag1);
-    // selectCarBrand.appendChild(tag2);
   });
 
 };
@@ -229,6 +237,48 @@ const DeleteBrand = () => {
     );
 };
 
+const EditBrand = () => {
+  const dataToSend = {
+    brand: parseInt(document.getElementById('txtEditBrand').value),
+    newBrand: document.getElementById('txtNewBrand').value,
+    newProdTime: parseInt(document.getElementById('txtUpdateTime').value),
+  };
+
+  const editBrandRequest = FetchRequest('PUT', dataToSend, 'http://localhost:3000/cars/updateCar');
+  const tagP = document.getElementById('editBrandMsg');
+  tagP.innerHTML = "";
+
+  editBrandRequest.then((editBrandResponse) => {
+      if (editBrandResponse.ok) {
+        editBrandResponse.json().then((editBrandObject) => {
+            tagP.appendChild(document.createTextNode(`La marca se editó correctamente`));
+            ResetForms();
+          })
+      } else {
+        //Manage error when is != to 201
+        tagP.appendChild(document.createTextNode(`La marca no existe`));
+      }
+    })
+    .catch((error) => tagP.appendChild(document.createTextNode(`Ocurrió un error en el sistema.  Intente más tarde`)));
+};
+
+const showCalendar = weekSchedule => {
+  const tbodyCalendar = document.getElementById('tbodyCalendar');
+  const keys = Object.keys(weekSchedule);
+  const columns = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
+  let htmlCode = ``;
+  keys.forEach(brand => {
+    htmlCode += `<tr><th scope="row" class="col-md-2">${brand}</th>`;
+    columns.forEach(column => {
+      if (weekSchedule[brand][column] != undefined)
+        htmlCode += `<td class="col-md-1">${weekSchedule[brand][column]} pedidos</td>`;
+      else htmlCode += `<td class="col-md-1">No hay pedidos</td>`;
+    })
+    htmlCode += `</tr>`;
+  });
+  tbodyCalendar.innerHTML = htmlCode;
+}
+
 const ResetForms = () => {
 
   document.getElementById('formCreateOrder').reset();
@@ -236,25 +286,36 @@ const ResetForms = () => {
   document.getElementById('formCreateBrand').reset();
   document.getElementById('formDeleteBrand').reset();
 
-  //   document.getElementById('deleteBrandMsg').innerHTML() = "";
-  //   document.getElementById('createBrandMsg').innerHTML() = "";
-  //   document.getElementById('createOrderMsg').innerHTML() = "";
-  //   document.getElementById('editOrderMsg').innerHTML() = "";
-
   const selectCarBrand = document.getElementById('txtCarBrand');
-  selectCarBrand.innerHTML = "";
+  selectCarBrand.innerHTML = `<option selected disabled>Seleccione la marca</option>`; 
   const selectDeleteBrand = document.getElementById('txtDeleteBrand');
-  selectDeleteBrand.innerHTML = "";
+  selectDeleteBrand.innerHTML = "<option selected disabled>Seleccione la marca</option>";
   const selectEditBrand = document.getElementById('txtEditBrand');
-  selectEditBrand.innerHTML = "";
+  selectEditBrand.innerHTML = "<option selected disabled>Seleccione la marca</option>";
 
   const requestGetCarBrands = FetchRequest('GET', {}, 'http://localhost:3000/cars/all');
   requestGetCarBrands.then((responseCarBrands) => {
-      if (responseCarBrands.ok) {
-        responseCarBrands.text()
-          .then((textResponse) => ShowAvaiableBrands(JSON.parse(textResponse)));
-      }
+      if (responseCarBrands.ok) responseCarBrands.text().then((textResponse) => ShowAvaiableBrands(JSON.parse(textResponse)));
     })
     .catch();
 
+    document.getElementById('tbodyCalendar').innerHTML = "";
+
+    const requestGetCalendar = FetchRequest('GET', {}, 'http://localhost:3000/ordersProductionDays/dayToDay');
+    requestGetCalendar.then(responseGetCalendar => {
+      if (responseGetCalendar.ok) responseGetCalendar.json().then(objectGetCalendar => showCalendar(objectGetCalendar.weekSchedule));
+      else {
+        console.log('No hay pedidos actualmente');
+        document.getElementById('calendarMsg').innerHTML = "No hay pedidos realizados en este momento";
+      }
+    }).catch(error => console.log(error));
+
+}
+
+const hideMessages = () => {
+  document.getElementById('editBrandMsg').innerHTML = "";
+  document.getElementById('createBrandMsg').innerHTML = "";
+  document.getElementById('deleteBrandMsg').innerHTML = "";
+  document.getElementById('createOrderMsg').innerHTML = "";
+  document.getElementById('calendarMsg').innerHTML = "";
 }

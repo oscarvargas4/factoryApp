@@ -64,30 +64,48 @@
         </div>
         <div id="divVerProgramacion" class="optionContent" style="display: none;">
           <h3>Ver Programacion</h3>
-          <input id="txtName" type="text">
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th class="col-md-2">Marca</th>
+                <th class="col-md-1">Lunes</th>
+                <th class="col-md-1">Martes</th>
+                <th class="col-md-1">Miercoles</th>
+                <th class="col-md-1">Jueves</th>
+                <th class="col-md-1">Viernes</th>
+                <th class="col-md-1">Sabado</th>
+                <th class="col-md-1">Domingo</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyCalendar">
+              
+            </tbody>
+          </table>
+
+          <p id="calendarMsg"></p>
         </div>
         <div id="divCrearVehiculo" class="optionContent" style="display: none;">
           <h3>Crear Marca</h3>
           <form action="#" onsubmit="CreateBrand();return false;" id="formCreateBrand">
             <label for="txtBrand">Ingrese el nombre de la nueva marca</label>
-            <input type="text" class="form-control" id="txtBrand">
+            <input type="text" class="form-control" id="txtBrand" required>
             <label for="txtProdTime">Ingrese la cantidad de horas para fabricar una unidad</label>
-            <input type="number" class="form-control" id="txtProdTime" min="1" max="8">
+            <input type="number" class="form-control" id="txtProdTime" min="1" max="8" required>
             <input type="submit" class="btn btn-primary button" value="Crear Marca"> 
             <p id="createBrandMsg"></p>
           </form>
         </div>
         <div id="divEditarVehiculo" class="optionContent" style="display: none;" >
           <h3>Editar Marca</h3>
-          <form action="#" onsubmit="/*EditBrand(); return false;*/" id="formEditBrand">          
+          <form action="#" onsubmit="EditBrand(); return false;" id="formEditBrand">          
             <label for="txtEditBrand">Seleccione la marca que desea editar</label>
-            <select type="text" class="form-control" id="txtEditBrand">
+            <select type="text" class="form-control" id="txtEditBrand" required>
               <option disabled selected>Seleccione</option>
             </select>
             <label for="txtNewBrand">Ingrese el nuevo nombre de la marca</label>
-            <input type="text" class="form-control" id="txtNewBrand">
-            <label for="txtProdTime">Actualice la cantidad de horas para fabricar una unidad</label>
-            <input type="number" class="form-control" id="txtProdTime" min="1" max="8">
+            <input type="text" class="form-control" id="txtNewBrand" required>
+            <label for="txtUpdateTime">Actualice la cantidad de horas para fabricar una unidad</label>
+            <input type="number" class="form-control" id="txtUpdateTime" min="1" max="8" required>
             <input type="submit" class="btn btn-primary button" value="Editar Marca"> 
             <p id="editBrandMsg"></p>
           </form>
@@ -96,10 +114,10 @@
           <h3>Eliminar Marca</h3>
           <form action="#" onsubmit="DeleteBrand(); return false;" id="formDeleteBrand">          
             <label for="txtDeleteBrand">Seleccione la marca que desea eliminar</label>
-            <select type="text" class="form-control" id="txtDeleteBrand">
+            <select type="text" class="form-control" id="txtDeleteBrand" required>
               <option disabled selected>Seleccione</option>
             </select>
-            <input type="submit" class="btn btn-primary button" value="Eliminar Marca"> <!-- Cambié button por input-->
+            <input type="submit" class="btn btn-danger button" value="Eliminar Marca"> 
             <p id="deleteBrandMsg"></p>
           </form>
         </div>

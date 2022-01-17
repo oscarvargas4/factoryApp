@@ -76,15 +76,15 @@ router.get('/all', async (req, res) => {
   }
 });
 
-// PUT "/cars/newBrand": update car
-router.put('/newBrand', async (req, res) => {
+// PUT "/cars/updateCar": update car
+router.put('/updateCar', async (req, res) => {
   if ((!req.body.brand) || (!req.body.newBrand) || (!req.body.newProdTime)) {
     res.status(400).json({ Error: 'Please provide: brand, newBrand, newProdTime' });
   } else {
     try {
       const updateCar = await Car.findOne({
         where: {
-          brand: req.body.brand.toLowerCase(),
+          id: req.body.brand,
         },
       });
 
@@ -105,37 +105,6 @@ router.put('/newBrand', async (req, res) => {
         await updateCar.update({
           brand: req.body.newBrand.toLowerCase(),
           prodTime:  req.body.newProdTime
-        });
-
-        res.json(updateCar);
-      }
-    } catch (error) {
-      res.status(400).json({ error });
-    }
-  }
-});
-
-// PUT "/cars/newProdTime": update prodTime car
-router.put('/newProdTime', async (req, res) => {
-  if (!req.body.brand) {
-    res.status(400).json({ Error: 'Please provide a brand name to update' });
-  } else if (!req.body.newProdTime || req.body.newProdTime === 0) {
-    res.status(400).json({
-      Error: 'Please provide a production time to update',
-    });
-  } else {
-    try {
-      const updateCar = await Car.findOne({
-        where: {
-          brand: req.body.brand.toLowerCase(),
-        },
-      });
-
-      if (updateCar === null) {
-        res.status(404).json({ Error: 'Car not found' });
-      } else {
-        await updateCar.update({
-          prodTime: req.body.newProdTime,
         });
 
         res.json(updateCar);
