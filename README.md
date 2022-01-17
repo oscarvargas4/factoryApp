@@ -8,7 +8,7 @@
     - <b>script.js</b>
   - <b>styles</b>
     - <b>styles.css</b>
-  - <b>index.html</b>Entry point
+  - <b>index.html</b> Entry point
 - <b>img</b>
 - <b>server</b>
   - <b>**postman**</b>
